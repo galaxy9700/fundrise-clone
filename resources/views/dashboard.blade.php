@@ -22,10 +22,7 @@
                 </div>
 
                 <div class="mt-6">
-                    <a href="#"
-                        class="block w-full bg-accent hover:bg-blue-600 hover:text-blue-100 text-black font-medium py-2 px-4 rounded text-center">
-                        Add Investment
-                    </a>
+                    <flux:button variant="primary" class="w-full font-bold!">Add Investment</flux:button>
                 </div>
             </div>
 
@@ -168,10 +165,7 @@
                     <div class="mt-4 p-6 bg-gray-800 rounded-lg text-center">
                         <p class="text-text">You don't have any investments yet.</p>
                         <div class="mt-4">
-                            <a href="#"
-                                class="bg-accent hover:bg-blue-600 hover:text-blue-100 text-black font-medium py-2 px-6 rounded">
-                                Browse Investment Opportunities
-                            </a>
+                            <flux:button variant="primary" class="font-bold!">Browse Investment Opportunities</flux:button>
                         </div>
                     </div>
                 @endif

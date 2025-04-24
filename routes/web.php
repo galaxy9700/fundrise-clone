@@ -20,6 +20,9 @@ Route::middleware(['auth'])->group(function () {
 
     //deposit
     Volt::route('deposit', 'deposit')->name('user.deposit');
+
+    //transaction
+    Volt::route('transactions', 'transaction')->name('user.transaction');
 });
 
 require __DIR__.'/auth.php';
