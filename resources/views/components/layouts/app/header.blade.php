@@ -116,6 +116,9 @@
                     <flux:navlist.item icon="wallet" :href="route('user.deposit')" :current="request()->routeIs('user.deposit')" wire:navigate>
                         {{ __('Deposit') }}
                     </flux:navlist.item>
+                    <flux:navlist.item icon="chart-bar" :href="route('user.transaction')" :current="request()->routeIs('user.transaction')" wire:navigate>
+                        {{ __('Transactions') }}
+                    </flux:navlist.item>
                     <flux:navlist.item icon="cog" :href="route('settings.profile')" :current="request()->routeIs('settings.profile')" wire:navigate>
                         {{ __('Settings') }}
                     </flux:navlist.item>
