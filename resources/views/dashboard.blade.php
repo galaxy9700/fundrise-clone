@@ -71,7 +71,7 @@
                             class="text-text">{{ auth()->user()->accredited_investor ? 'Accredited' : 'Standard' }}</span>
                     </div>
                     <div class="flex justify-between items-center mt-2">
-                        <span class="text-secondary">Risk Profile</span>
+                        <span class="text-secondary">Tolerance Profile</span>
                         <span class="text-text">{{ ucfirst(auth()->user()->risk_tolerance ?? 'Not set') }}</span>
                     </div>
                     <div class="flex justify-between items-center mt-2">

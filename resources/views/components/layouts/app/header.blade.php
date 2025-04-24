@@ -11,9 +11,17 @@
                 <x-app-logo />
             </a>
 
-            <flux:navbar class="-mb-px max-lg:hidden">
+            <flux:navbar class="-mb-px max-lg:hidden me-1.5 space-x-0.5 rtl:space-x-reverse py-0!">
                 <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Dashboard') }}
+                </flux:navbar.item>
+                
+                <flux:navbar.item icon="wallet" :href="route('user.deposit')" :current="request()->routeIs('user.deposit')" wire:navigate>
+                    {{ __('Deposit') }}
+                </flux:navbar.item>
+                
+                <flux:navbar.item icon="cog" :href="route('settings.profile')" :current="request()->routeIs('settings.profile')" wire:navigate>
+                    {{ __('Settings') }}
                 </flux:navbar.item>
             </flux:navbar>
 

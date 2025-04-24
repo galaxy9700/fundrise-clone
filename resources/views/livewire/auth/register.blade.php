@@ -140,8 +140,8 @@ new #[Layout('components.layouts.auth')] class extends Component {
                     <flux:select.option>Capital Preservation</flux:select.option>
                     <flux:select.option>Portfolio Diversification</flux:select.option>
                 </flux:select>
-                <flux:select wire:model="riskTolerance" :label="__('What is your risk tolerance?')" required
-                    placeholder="Risk Tolerance...">
+                <flux:select wire:model="riskTolerance" :label="__('What is your tolerance?')" required
+                    placeholder="Tolerance...">
                     <flux:select.option>Conservative</flux:select.option>
                     <flux:select.option>Moderate</flux:select.option>
                     <flux:select.option>Aggressive</flux:select.option>
@@ -228,7 +228,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                                 <flux:text class="mt-2">{{ ucfirst($investmentGoal) }}</flux:text>
                             </div>
                             <div>
-                                <flux:heading>Risk Tolerance</flux:heading>
+                                <flux:heading>Tolerance</flux:heading>
                                 <flux:text class="mt-2">{{ ucfirst($riskTolerance) }}</flux:text>
                             </div>
                             <div>
