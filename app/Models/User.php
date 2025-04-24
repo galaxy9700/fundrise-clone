@@ -61,9 +61,22 @@ class User extends Authenticatable
      *
      * @return float
      */
+    // public function getTotalInvestedAttribute()
+    // {
+    //     return $this->investments()->sum('amount');
+    // }
+
     public function getTotalInvestedAttribute()
     {
-        return $this->investments()->sum('amount');
+        return $this->deposit()->sum('amount');
+    }
+
+    /**
+     * Get all of the user's investments.
+     */
+    public function deposit()
+    {
+        return $this->hasMany(Deposit::class);
     }
 
     /**

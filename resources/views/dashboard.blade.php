@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="mt-6">
-                    <flux:button variant="primary" class="w-full font-bold!">Add Investment</flux:button>
+                    <flux:button href="{{ route('user.deposit') }}" wire:navigate variant="primary" class="w-full font-bold!">Add Investment</flux:button>
                 </div>
             </div>
 
