@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('investment_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('amount', 15, 2);
             $table->string('transaction_type'); // deposit, withdrawal, dividend, interest
-             $table->string('payment_method')->nullable(); // bitcoin, bank, etc.
+            $table->string('proof_file_path')->nullable(); 
+            $table->string('payment_method')->nullable(); // bitcoin, bank, etc.
             $table->json('payment_details')->nullable();
             $table->string('status'); // pending, completed, failed, cancelled
             $table->string('reference')->nullable();

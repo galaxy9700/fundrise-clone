@@ -8,16 +8,19 @@
                     <div class="flex justify-between items-center">
                         <span class="text-secondary">Total Invested</span>
                         <span
-                            class="text-text font-medium">${{ number_format(auth()->user()->getTotalInvestedAttribute(), 2) }}</span>
+                            class="text-text font-medium">${{ number_format(auth()->user()->TotalDeposit, 2) }}</span>
                     </div>
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-secondary">Current Value</span>
                         <span
-                            class="text-text font-medium">${{ number_format(auth()->user()->getTotalInvestedAttribute(), 2) }}</span>
+                            class="text-text font-medium">${{ number_format(auth()->user()->TotalDeposit, 2) }}</span>
                     </div>
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-secondary">Total Return</span>
-                        <span class="text-green-500 font-medium">$0.00 (0.00%)</span>
+                        <span class="text-green-500 font-medium">
+                            ${{ number_format(auth()->user()->TotalInvested, 2) }} 
+                            {{-- ({{ number_format(auth->user()) }}%) --}}
+                        </span>
                     </div>
                 </div>
 
@@ -100,16 +103,16 @@
         <!-- Your Investments -->
         <div class="mt-8">
             <div class="bg-darker overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-text">Your Investments</h3>
+                <h3 class="text-lg font-semibold text-text">Investments</h3>
 
-                @if (auth()->user()->investments->count() > 0)
+                @if (auth()->user()->deposit->count() > 0)
                     <div class="mt-4 overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-700">
                             <thead>
                                 <tr>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
-                                        Plan</th>
+                                        ID</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
                                         Amount</th>
@@ -118,43 +121,37 @@
                                         Status</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
-                                        Current Value</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
                                         Return</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">
-                                        Start Date</th>
+                                        Date</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-700">
-                                @foreach (auth()->user()->investments as $investment)
+                                @foreach (auth()->user()->transactions->where('transaction_type', 'deposit') as $dpt)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
-                                            {{ $investment->plan->name ?? 'Unknown Plan' }}
+                                            {{ $dpt->id }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
-                                            ${{ number_format($investment->amount, 2) }}</td>
+                                            ${{ number_format($dpt->amount, 2) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                            {{ $investment->status === 'active'
+                                                            {{ $dpt->status === 'success'
                                                                 ? 'bg-green-100 text-green-800'
-                                                                : ($investment->status === 'pending'
+                                                                : ($dpt->status === 'pending'
                                                                     ? 'bg-yellow-100 text-yellow-800'
                                                                     : 'bg-gray-100 text-gray-800') }}">
-                                                {{ ucfirst($investment->status) }}
+                                                {{ ucfirst($dpt->status) }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
-                                            ${{ number_format($investment->current_value ?? $investment->amount, 2) }}
-                                        </td>
                                         <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm {{ $investment->performance_percentage > 0 ? 'text-green-500' : ($investment->performance_percentage < 0 ? 'text-red-500' : 'text-text') }}">
-                                            {{ number_format($investment->performance_percentage, 2) }}%
+                                            class="px-6 py-4 whitespace-nowrap text-sm {{ $dpt->performance_percentage > 0 ? 'text-green-500' : ($dpt->performance_percentage < 0 ? 'text-red-500' : 'text-text') }}">
+                                            {{ number_format($dpt->performance_percentage, 2) }}%
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-text">
-                                            {{ $investment->start_date ? $investment->start_date->format('M d, Y') : 'Pending' }}
+                                            {{ $dpt->created_at ? $dpt->created_at->format('M d, Y') : 'Pending' }}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -165,7 +162,7 @@
                     <div class="mt-4 p-6 bg-gray-800 rounded-lg text-center">
                         <p class="text-text">You don't have any investments yet.</p>
                         <div class="mt-4">
-                            <flux:button variant="primary" class="font-bold!">Browse Investment Opportunities</flux:button>
+                            <flux:button href="{{ route('user.deposit') }}" wire:navigate variant="primary" class="font-bold!">Add Investment</flux:button>
                         </div>
                     </div>
                 @endif

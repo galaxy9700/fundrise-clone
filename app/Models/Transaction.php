@@ -13,6 +13,7 @@ class Transaction extends Model
         'investment_id',
         'amount',
         'transaction_type',
+        'proof_file_path',
         'payment_method',
         'status',
         'reference',

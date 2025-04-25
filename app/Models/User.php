@@ -61,15 +61,32 @@ class User extends Authenticatable
      *
      * @return float
      */
-    // public function getTotalInvestedAttribute()
-    // {
-    //     return $this->investments()->sum('amount');
-    // }
 
     public function getTotalInvestedAttribute()
     {
-        return $this->deposit()->sum('amount');
+        $totalDeposit = $this->getTotalDepositAttribute();
+        $totalInterest = $this->transactions() ->where('transaction_type', 'interest')
+                    ->sum('amount');
+
+        return $totalDeposit + $totalInterest;
     }
+
+    public function getTotalDepositAttribute()
+    {
+        return $this->transactions()->where('transaction_type', 'deposit')
+                    ->where('status', 'success')->sum('amount');
+    }
+
+    // public function getTotalInAttribute()
+    // {
+    //     return $this->transactions()->where('transaction_type', 'deposit')
+    //                 ->where('status', 'success')->sum('amount');
+    // }
+
+    // public function getTotalInvestedAttribute()
+    // {
+    //     return $this->deposit()->sum('amount');
+    // }
 
     /**
      * Get all of the user's investments.

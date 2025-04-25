@@ -2,6 +2,7 @@
 
 use Livewire\Livewire;
 use App\Models\Deposit;
+use App\Models\Transaction;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Title;
@@ -57,6 +58,17 @@ new #[Title('Deposit')] class extends Component {
                 'status' => 'pending', // Default status
             ]);
 
+            // Create the transaction record
+            $transaction = Transaction::create([
+                'user_id' => auth()->id(),
+                'amount' => $this->amount,
+                'transaction_type' => 'deposit',
+                'payment_method' => $this->paymentMethod,
+                'proof_file_path' => $path,
+                'status' => 'pending',
+                'reference' => 'INV' . Str::random(8),
+            ]);
+
             // Reset form
             $this->reset(['amount', 'paymentProof', 'transactionId']);
             $this->paymentMethod = '';
@@ -64,6 +76,9 @@ new #[Title('Deposit')] class extends Component {
             // Flash success message
             session()->flash('message', 'Deposit submitted successfully! Our team will review it shortly.');
             session()->flash('message-type', 'success');
+
+            // Auto-clear notification after 3 seconds
+            $this->dispatch('clearNotificationAfterDelay');
         } catch (\Exception $e) {
             // Flash error message
             session()->flash('message', 'Failed to submit deposit: ' . $e->getMessage());
@@ -235,6 +250,14 @@ new #[Title('Deposit')] class extends Component {
                             <div class="w-full" x-show="uploading">
                                <progress max="100" x-bind:value="progress"></progress>
                             </div>
+
+                            <div x-show="uploading" class="mt-3">
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" :style="`width: ${progress}%`"></div>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">Uploading... <span x-text="progress"></span>%</p>
+                            </div>
+                            @error('paymentProof') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
